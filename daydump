@@ -1,0 +1,21 @@
+
+
+cmake $HOME/alexa/source/avs-device-sdk \
+ -DGSTREAMER_MEDIA_PLAYER=ON \
+ -DPORTAUDIO=ON \
+ -DPORTAUDIO_LIB_PATH=$HOME/alexa/third-party/portaudio/lib/.libs/libportaudio.so \
+ -DPORTAUDIO_INCLUDE_DIR=$HOME/alexa/third-party/portaudio/include \
+ -DCMAKE_BUILD_TYPE=DEBUG
+
+
+bash genConfig.sh config.json 12345 \
+   $HOME/alexa/build/Integration/database \
+   $HOME/alexa/source/avs-device-sdk \
+   $HOME/alexa/build/Integration/AlexaClientSDKConfig.json \
+   -DSDK_CONFIG_MANUFACTURER_NAME="alexa" \
+   -DSDK_CONFIG_DEVICE_DESCRIPTION="ubuntu"
+
+
+mkdir $HOME/alexa/build/Integration/database
+
+./SampleApp/src/SampleApp ./Integration/AlexaClientSDKConfig.json
