@@ -1,5 +1,13 @@
 
 
+cd $HOME/alexa/sourcegit clone https://github.com/alexa/avs-device-sdk.git 
+cd $HOME/alexa/build 
+cmake $HOME/alexa/source/avs-device-sdk \ -DGSTREAMER_MEDIA_PLAYER=ON \ -DPORTAUDIO=ON \ -DPORTAUDIO_LIB_PATH=$HOME/alexa/third-party/portaudio/lib/.libs/libportaudio.so \ -DPORTAUDIO_INCLUDE_DIR=$HOME/alexa/third-party/portaudio/include \ -DCMAKE_BUILD_TYPE=DEBUG 
+make SampleApp -j2 
+
+mkdir $HOME/alexa/build/Integration/database
+
+cd $HOME/alexa/source/avs-device-sdk/tools/Install 
 cmake $HOME/alexa/source/avs-device-sdk \
  -DGSTREAMER_MEDIA_PLAYER=ON \
  -DPORTAUDIO=ON \
@@ -16,6 +24,15 @@ bash genConfig.sh config.json 12345 \
    -DSDK_CONFIG_DEVICE_DESCRIPTION="ubuntu"
 
 
-mkdir $HOME/alexa/build/Integration/database
 
 ./SampleApp/src/SampleApp ./Integration/AlexaClientSDKConfig.json
+
+
+Test 
+
+make all test
+
+make all integration
+
+
+./Integration/test/SpeechSynthesizerIntegrationTest ./Integration/AlexaClientSDKConfig.json   ../source/avs-device-sdk/Integration/inputs 
