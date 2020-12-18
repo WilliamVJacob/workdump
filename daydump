@@ -1,11 +1,47 @@
+#prerequiste
+cd $HOME
+mkdir alexa    
+cd alexa
+mkdir build source third-party application-necessities  
+cd application-necessities
+mkdir sound-files
+ 
+sudo apt-get update && sudo apt-get upgrade -y
+cd $HOME
+sudo apt-get install -y \
+git gcc cmake openssl clang-format libgstreamer1.0-0 libgstreamer-plugins-base1.0-dev \
+gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad \
+gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools \
+pulseaudio doxygen libsqlite3-dev repo libasound2-dev
+
+# install curl
+sudo apt-get -y install build-essential nghttp2 libnghttp2-dev libssl-dev
+wget https://curl.haxx.se/download/curl-7.63.0.tar.gz
+tar xzf curl-7.63.0.tar.gz
+cd curl-7.63.0
+./configure --with-nghttp2 --prefix=/usr/local --with-ssl
+make && sudo make install
+sudo ldconfig
+
+#Install and configure PortAudio.
+cd ../third-party
+wget -c http://www.portaudio.com/archives/pa_stable_v190600_20161030.tgz
+tar xf pa_stable_v190600_20161030.tgz
+cd portaudio
+./configure --without-jack && make
 
 
+# alexa download & compile 
+cd $HOME/alexa/source
 cd $HOME/alexa/sourcegit clone https://github.com/alexa/avs-device-sdk.git 
 cd $HOME/alexa/build 
 cmake $HOME/alexa/source/avs-device-sdk \ -DGSTREAMER_MEDIA_PLAYER=ON \ -DPORTAUDIO=ON \ -DPORTAUDIO_LIB_PATH=$HOME/alexa/third-party/portaudio/lib/.libs/libportaudio.so \ -DPORTAUDIO_INCLUDE_DIR=$HOME/alexa/third-party/portaudio/include \ -DCMAKE_BUILD_TYPE=DEBUG 
 make SampleApp -j2 
 
+# building alexa
 mkdir $HOME/alexa/build/Integration/database
+
+
 
 cd $HOME/alexa/source/avs-device-sdk/tools/Install 
 cmake $HOME/alexa/source/avs-device-sdk \
@@ -15,7 +51,7 @@ cmake $HOME/alexa/source/avs-device-sdk \
  -DPORTAUDIO_INCLUDE_DIR=$HOME/alexa/third-party/portaudio/include \
  -DCMAKE_BUILD_TYPE=DEBUG
 
-
+# create config file
 bash genConfig.sh config.json 12345 \
    $HOME/alexa/build/Integration/database \
    $HOME/alexa/source/avs-device-sdk \
@@ -24,15 +60,13 @@ bash genConfig.sh config.json 12345 \
    -DSDK_CONFIG_DEVICE_DESCRIPTION="ubuntu"
 
 
-
+# run alexa
 ./SampleApp/src/SampleApp ./Integration/AlexaClientSDKConfig.json
 
 
-Test 
-
+# compile and run test
 make all test
 
 make all integration
-
 
 ./Integration/test/SpeechSynthesizerIntegrationTest ./Integration/AlexaClientSDKConfig.json   ../source/avs-device-sdk/Integration/inputs 
