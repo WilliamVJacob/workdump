@@ -50,6 +50,8 @@ cmake $HOME/alexa/source/avs-device-sdk \
  -DPORTAUDIO_LIB_PATH=$HOME/alexa/third-party/portaudio/lib/.libs/libportaudio.so \
  -DPORTAUDIO_INCLUDE_DIR=$HOME/alexa/third-party/portaudio/include \
  -DCMAKE_BUILD_TYPE=DEBUG
+ 
+  cmake $HOME/alexa/source/avs-device-sdk  -DGSTREAMER_MEDIA_PLAYER=ON  -DPORTAUDIO=ON  -DPORTAUDIO_LIB_PATH=$HOME/alexa/third-party/portaudio/lib/.libs/libportaudio.so -DPORTAUDIO_INCLUDE_DIR=$HOME/alexa/third-party/portaudio/include  -DCMAKE_BUILD_TYPE=DEBUG
 
 # create config file
 bash genConfig.sh config.json 12345 \
@@ -70,6 +72,8 @@ make all test
 make all integration
 
 ./Integration/test/SpeechSynthesizerIntegrationTest ./Integration/AlexaClientSDKConfig.json   ../source/avs-device-sdk/Integration/inputs 
+./Integration/test/JioPodSpeechTest ./Integration/AlexaClientSDKConfig.json   ../source/avs-device-sdk/Integration/inputs 
+
 
 
 
@@ -80,3 +84,6 @@ Berlin> u <file name in Uboot directoy> 0x10000000
 Berlin> spinit
 Berlin> erase f0000000 f00fffff
 Berlin> cp.b 0x10000000 0xf0000000 0xf00000;
+
+
+arecord -d 4 -f S16_LE -c 1 -r 16000 recognize_jio_test.wav
