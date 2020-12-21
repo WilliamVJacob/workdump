@@ -70,3 +70,13 @@ make all test
 make all integration
 
 ./Integration/test/SpeechSynthesizerIntegrationTest ./Integration/AlexaClientSDKConfig.json   ../source/avs-device-sdk/Integration/inputs 
+
+
+
+
+
+Copy SPI image to spi flash 
+Berlin> u <file name in Uboot directoy> 0x10000000
+Berlin> spinit
+Berlin> erase f0000000 f00fffff
+Berlin> cp.b 0x10000000 0xf0000000 0xf00000;
