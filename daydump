@@ -140,3 +140,5 @@ ubuntu arecord: main:722: audio open error: Device or resource busy
 lsof | grep snd
  find the audio ipc which is blocking the device 
 
+/not  a solution
+fuser -fv /dev/snd/* /dev/dsp*
