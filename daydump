@@ -87,3 +87,49 @@ Berlin> cp.b 0x10000000 0xf0000000 0xf00000;
 
 
 arecord -d 4 -f S16_LE -c 1 -r 16000 recognize_jio_test.wav
+
+
+
+
+How to enable VFP feature in cortex a53 64bit kernel for armv7 architecture
+
+Hi,
+
+I got the below"cpuinfo" information in my cortex a53 machine. Can you tell if  VFP feature is enabled in my machine ? If it is not enabled, how to enable VFP for 64bit kernel.
+
+$cat /proc/cpuinfo
+processor : 0
+BogoMIPS : 50.00
+Features : fp asimd aes pmull sha1 sha2 crc32 cpuid
+CPU implementer : 0x41
+CPU architecture: 8
+CPU variant : 0x0
+CPU part : 0xd03
+CPU revision : 4
+
+processor : 1
+BogoMIPS : 50.00
+Features : fp asimd aes pmull sha1 sha2 crc32 cpuid
+CPU implementer : 0x41
+CPU architecture: 8
+CPU variant : 0x0
+CPU part : 0xd03
+CPU revision : 4
+
+processor : 2
+BogoMIPS : 50.00
+Features : fp asimd aes pmull sha1 sha2 crc32 cpuid
+CPU implementer : 0x41
+CPU architecture: 8
+CPU variant : 0x0
+CPU part : 0xd03
+CPU revision : 4
+
+processor : 3
+BogoMIPS : 50.00
+Features : fp asimd aes pmull sha1 sha2 crc32 cpuid
+CPU implementer : 0x41
+CPU architecture: 8
+CPU variant : 0x0
+CPU part : 0xd03
+CPU revision : 4
