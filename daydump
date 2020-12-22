@@ -133,3 +133,10 @@ CPU architecture: 8
 CPU variant : 0x0
 CPU part : 0xd03
 CPU revision : 4
+
+
+
+ubuntu arecord: main:722: audio open error: Device or resource busy
+lsof | grep snd
+ find the audio ipc which is blocking the device 
+
