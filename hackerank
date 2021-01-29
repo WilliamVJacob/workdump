@@ -1,3 +1,29 @@
+Mini max
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+# Complete the miniMaxSum function below.
+def miniMaxSum(arr):
+    max_sum = sum(arr)
+    sum_except_one = max_sum - arr[0];
+    sum_except_two = max_sum - arr[1];
+    sum_except_three = max_sum - arr[2];
+    sum_except_four = max_sum - arr[3];
+    sum_except_five = max_sum - arr[4];
+    maxnum = max(sum_except_one,sum_except_two,sum_except_three,sum_except_four,sum_except_five)
+    minnum = min(sum_except_one,sum_except_two,sum_except_three,sum_except_four,sum_except_five)
+    print(minnum, maxnum)
+if __name__ == '__main__':
+    arr = list(map(int, input().rstrip().split()))
+
+    miniMaxSum(arr)
+
+
 #####################################################################Compare the Triplets#####################################################################
 #!/bin/python3
 
