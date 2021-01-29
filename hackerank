@@ -143,4 +143,34 @@ if __name__ == '__main__':
     arr = list(map(int, input().rstrip().split()))
 
     plusMinus(arr)
+    
+    
+    
+    
+    #staircase
+    
+    #!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+# Complete the staircase function below.
+def staircase(n):
+    k=1
+    for i in range ( n,0,-1):
+        
+        for j in range(n-k):
+            print(" ",end='')
+        for j in range(k):    
+            print("#",end='')   
+        print("")
+        k += 1
+if __name__ == '__main__':
+    n = int(input())
+
+    staircase(n)
+
 
