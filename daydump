@@ -142,3 +142,26 @@ lsof | grep snd
 
 /not  a solution
 fuser -fv /dev/snd/* /dev/dsp*
+
+
+To install respeaker driver ac108  , follow the steps below
+sudo apt-get update
+
+sudo apt-get upgrade
+
+git clone https://github.com/respeaker/seeed-voicecard.git
+
+cd seeed-voicecard
+
+
+open install.sh and change the line 
+FORCE_KERNEL="1.20201022-1"
+kernels="5.4.72-v8+"
+
+open Makefile and add the line before ifdef DEBUG
+
+ ccflags-y += -fno-stack-protector
+
+sudo ./install.sh
+
+reboot
