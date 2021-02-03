@@ -1,3 +1,42 @@
+--------------------Bt pairing 
+
+pair 00:00:AB:CD:5D:BA
+trust 00:00:AB:CD:5D:BA
+connect 00:00:AB:CD:5D:BA
+remove 00:00:AB:CD:5D:BA
+00:00:AB:CD:5D:BA
+
+pacmd set-card-profile bluez_card.00_00_AB_CD_5D_BA a2dp_sink
+pacmd set-default-sink bluez_sink.00_00_AB_CD_5D_BA.a2dp_sink
+
+wget http://youness.net/wp-content/uploads/2016/08/h2g2.ogg -P /tmp/
+paplay /tmp/h2g2.ogg
+
+
+
+
+--------------To install respeaker driver ac108  , follow the steps below
+sudo apt-get update
+
+sudo apt-get upgrade
+
+git clone https://github.com/respeaker/seeed-voicecard.git
+
+cd seeed-voicecard
+
+
+open install.sh and change the line 
+FORCE_KERNEL="1.20201022-1"
+kernels="5.4.72-v8+"
+
+open Makefile and add the line before ifdef DEBUG
+
+ ccflags-y += -fno-stack-protector
+
+sudo ./install.sh
+
+reboot
+
 #prerequiste
 cd $HOME
 mkdir alexa    
@@ -144,24 +183,4 @@ lsof | grep snd
 fuser -fv /dev/snd/* /dev/dsp*
 
 
-To install respeaker driver ac108  , follow the steps below
-sudo apt-get update
 
-sudo apt-get upgrade
-
-git clone https://github.com/respeaker/seeed-voicecard.git
-
-cd seeed-voicecard
-
-
-open install.sh and change the line 
-FORCE_KERNEL="1.20201022-1"
-kernels="5.4.72-v8+"
-
-open Makefile and add the line before ifdef DEBUG
-
- ccflags-y += -fno-stack-protector
-
-sudo ./install.sh
-
-reboot
