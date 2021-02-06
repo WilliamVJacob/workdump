@@ -33,7 +33,7 @@ open Makefile and add the line before ifdef DEBUG
 
  ccflags-y += -fno-stack-protector
 
-sudo ./install.sh
+sudo ./install.sh --compat-kernel
 
 reboot
 
