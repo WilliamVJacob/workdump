@@ -1,3 +1,12 @@
+----------------------------Git for workdump
+git clone https://github.com/WilliamVJacob/workdump.git
+git add
+git commit
+git remote set-url origin https://williamvjacob:asking1234567890@github.com/WilliamVJacob/workdump.git
+git push origin main
+
+
+
 ----------Gedit-------
 Multiline edit Ctrl+E
 
