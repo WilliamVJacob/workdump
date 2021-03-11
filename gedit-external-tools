@@ -1,0 +1,62 @@
+#Search Selection
+
+#!/bin/bash 
+
+read selection
+echo $selection
+
+#directory="$GEDIT_CURRENT_DOCUMENT_DIR" &
+
+search_folder=$(zenity  --file-selection --directory --title="Search Directory " 2>/dev/null
+)
+echo $search_folder
+files_list=$(grep -lr "$selection" $search_folder)
+echo $files_list
+
+
+#Update Timestamp
+
+#!/bin/bash 
+
+read selection
+echo $selection
+
+#directory="$GEDIT_CURRENT_DOCUMENT_DIR" &
+
+search_folder=$(zenity  --file-selection --directory --title="Search Directory " 2>/dev/null
+)
+#echo $search_folder
+files_list=$(grep -lr "$selection" $search_folder)
+echo $files_list
+files_arr=( $files_list )
+
+
+for file_name in "${files_arr[@]}"
+do
+    echo $file_name
+    touch -a $file_name
+
+    echo "&"
+
+done
+
+
+#Open workdump
+#!/bin/sh
+gedit $HOME/workdump/daydump
+
+
+
+#Commit and Upload 
+
+#!/bin/sh
+cd $HOME/workdump/
+
+git add daydump
+
+git commit -m "Update Workdump"
+
+git push origin main
+
+
+
