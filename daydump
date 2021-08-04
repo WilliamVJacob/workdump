@@ -10,6 +10,15 @@ git push origin main
 ----------Gedit-------
 Multiline edit Ctrl+E
 
+Ctrl+ I	Move the cursor to a specific line number.
+Ctrl + G - Replace 
+Ctrl + M / Ctrl + shift + m -  Comment /Uncomment
+Ctrl + BkSpce	Delete the word behind the cursor.
+Ctrl + Del	Delete the word ahead of the cursor.
+Shift +Ctrl +BkSpce	Delete from the cursor to the beginning of the line.
+Shift+Ctrl+Del	Delete from the cursor to the end of the line.
+Ctrl+ D	Delete the current line.
+Alt +↑/↓ Move (drag) current line	
 
 --------------------Bt pairing 
 
