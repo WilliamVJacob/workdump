@@ -1,3 +1,9 @@
+----------------------------Toolchain kl720
+
+sudo docker cp  edf75761b2af:/workspace/examples/LittleNet/test_api.py .
+sudo docker start -i edf75761b2af
+sudo docker run -it -v /mnt/docker:/docker_mount kneron/toolchain:latest
+
 ----------------------------Git for workdump
 Goto to ~/
 git clone https://github.com/WilliamVJacob/workdump.git
