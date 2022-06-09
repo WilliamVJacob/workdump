@@ -1,3 +1,57 @@
+Effort Jun
+
+Friday 03-06-20
+Navin
+Erased and flashed 1.3.22 on 1 speaker 
+Started testing 1.3.22 in the old board
+Joseph
+Started testing 1.3.22 in the old board
+Started working on cpu-dump test tool
+William 
+Erased and flashed 1.3.22 on 2nd speaker
+Debugged the secured boot check fail error.
+Found the wrong QR code issue and Mac id 
+
+
+Monday 06- 06-20
+
+Navin
+read secure boot document
+
+Joseph
+read secure boot document
+
+William
+soldered 1 speaker
+debugged the acs data issue
+Flashed FT and wrote ACS data 
+Fota upgrade to 1.3.22 on 1 speaker
+
+Tuesday 07-06-20
+Navin- 
+Practiced soldering on the damaged board
+learned acs_data_gen code
+Joseph- 
+Practiced soldering on the damaged board
+learned acs_data_gen code
+
+William
+Soldered 2 more devices
+Flashed FT and wrote ACS data on 2 more speaker
+Completed fota upgrade on 2 more speaker
+
+
+Wednesday 08-06-20
+William , Joseph , Navin
+Tested 1.3.22  on new speakers
+
+
+
+
+
+
+
+
 ----------------------------Toolchain kl720
 
 sudo docker cp  edf75761b2af:/workspace/examples/LittleNet/test_api.py .
