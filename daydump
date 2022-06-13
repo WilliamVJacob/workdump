@@ -1,8 +1,32 @@
 
 
 Effort Jun
+Monday Jun13
 
-Thursday 07-06-22
+William 
+Soldered 6 speakers 
+Downloaded esp-idf 4.4 and compiled test code with errors
+
+Navin
+bt/va/dlna testing
+
+Joseph
+wrote acs data  and flashed 7 speaker with 1.3.22
+sent jiova binary to yeow
+
+
+Friday 10-Jun
+William
+Soldered 1 speaker
+Navin
+sanity test on 3 speakers
+
+Joseph
+tested va crash when bt is on
+
+
+Thursday 09-06-22
+william
 completed fota testing for 5 speaker
 supported elangovan for his git issue
 gave new build  with library and build with source code to elangovan
