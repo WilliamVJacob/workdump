@@ -1,6 +1,24 @@
 
 
-Effort Jun
+Thursday 16th jun
+William
+Compiled and tested the code for sending the same data to Speaker and NDP120 on the old idf (esp 3.2)
+Compiled selva's syntiant code.
+
+
+Joseph
+fota prompt implementation
+
+Friday
+William
+Debugging the echo reference issue in the old-idf
+Supported Joseph for fota
+Removed all the soldering from 7 speakers
+Joseph
+fota testing on 8 speakers
+sanity test on 1 speakers
+
+
 Tueday  14
 William
 test speaker and mic on the esp4.4 code 
