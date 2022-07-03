@@ -1,4 +1,14 @@
 
+
+
+    #if 1
+
+    Jio_Write_Manufacture_details(KEY_SERIAL_NUM, "RJBSPGH00000007");
+    Jio_Write_Manufacture_details(KEY_ACS_DATA, "d5d415d384cff90a");
+        
+    #endif
+
+
 192.168.2.110/facspk?test_init&fct=serialnum&sno=RJBSPGH00000005&acs_data=RJBSF008D160AEFC 
 
 
