@@ -1,4 +1,10 @@
 
+python esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 921600 --before default_reset  write_flash --encrypt 0x20000 build/jiova.bin 
+
+python ../../../alexa-idf/components/esptool_py/esptool/esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 921600 --before default_reset  write_flash --encrypt 0x20000 build/jiova.bin 
+
+
+
 
 
     #if 1
@@ -9,7 +15,9 @@
     #endif
 
 
-python esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 921600 --before default_reset  write_flash --encrypt 0x20000 build/jiova.bin 
+
+
+
 192.168.2.110/facspk?test_init&fct=serialnum&sno=RJBSPGH00000005&acs_data=RJBSF008D160AEFC 
 
 
