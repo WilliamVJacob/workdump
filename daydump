@@ -4,6 +4,7 @@ python esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 921600 --before defaul
 python ../../../alexa-idf/components/esptool_py/esptool/esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 921600 --before default_reset  write_flash --encrypt 0x20000 build/jiova.bin 
 
 
+    printf("\nT1\n [%d] [%s] ",__LINE__,__func__);
 
 
 
