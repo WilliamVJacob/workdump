@@ -1,3 +1,9 @@
+nvs-set jiova-log-level u16 7 
+nvs-get jiova-log-level u16
+
+xtensa-esp32-elf-addr2line -pfiaC ./build/jiova.elf 0x40110075
+
+
 
 python esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 921600 --before default_reset  write_flash --encrypt 0x20000 build/jiova.bin 
 
