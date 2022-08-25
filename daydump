@@ -89,7 +89,101 @@ jio_dev.c Jio_Set_BT_State_After_OTA
 #endif
 
 -------------------------------------------------------
+jio_dev.c
 
+
+#if 0
+char* Jio_GetAcsData(char* pcACS_Data) {
+    if(NULL != pcACS_Data) {
+        char acMAC[16] = {0};
+	    ESP_LOGI(TAG, "Jio_GetAcsData FUNCTION ");
+        char* pcSerialNum = Jio_GetDeviceInfo(KEY_SERIAL_NUM);
+    	ESP_LOGI(TAG, "pcSerialNum %s ",pcSerialNum);
+        if(NULL != pcSerialNum) {
+            Jio_GetMacAddress(acMAC);
+
+            /* first 4byte of serial number + 12bytes of MAC address . Total length of the ACS data is 16 bytes*/
+            sprintf(pcACS_Data, "%.4s%.12s", pcSerialNum, acMAC);
+            free(pcSerialNum);
+            pcSerialNum = NULL;
+        }
+        else {
+            ESP_LOGE(TAG, "<%s> <%s> <%d> <I>:: C<%p> malloc fail...", gpcFileName, __FUNCTION__, __LINE__, __builtin_return_address(0));
+        }
+    }
+    else{
+        ESP_LOGE(TAG, "<%s> <%s> <%d> <I>:: C<%p> Inv Arg...", gpcFileName, __FUNCTION__, __LINE__, __builtin_return_address(0));
+    }
+    ESP_LOGE(TAG, "Final ACS %s",pcACS_Data);
+    return pcACS_Data;
+}
+
+
+char* Jio_GetAcsData(char* pcACS_Data) {
+    if(NULL != pcACS_Data) {
+        char acMAC[16] = {0};
+        char acSerialNum[32] = {0};
+
+        Jio_GetMacAddress(acMAC);
+        Jio_GetSerialNumber(acSerialNum);
+
+        /* first 4byte of serial number + 12bytes of MAC address . Total length of the ACS data is 16 bytes*/
+        sprintf(pcACS_Data, "%.4s%.12s", acSerialNum, acMAC);
+    }
+    else{
+        ESP_LOGE(TAG, "<%s> <%s> <%d> <I>:: C<%p> Inv Arg...", gpcFileName, __FUNCTION__, __LINE__, __builtin_return_address(0));
+    }
+
+    return pcACS_Data;
+}
+
+/* Commented for Now  Until Serial Number is Fixed*/
+char* Jio_GetSerialNumber(char* pcSerialNum) {
+    if(NULL != pcSerialNum) {
+        /*Now using MAC address as serial number.*/
+        u_char acMACaddr[32] = {0};
+        u_char mac[6] = {0};
+
+        esp_wifi_get_mac(ESP_IF_WIFI_STA, mac);
+
+        sprintf((char*)acMACaddr, "%02x:%02x:%02x:%02x:%02x:%02x",
+                mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+
+        SS_GenSerialNum(acMACaddr, pcSerialNum);
+    }
+    else{
+        ESP_LOGE(TAG, "<%s> <%s> <%d> <I>:: C<%p> Inv Arg...", gpcFileName, __FUNCTION__, __LINE__, __builtin_return_address(0));
+    }
+    return pcSerialNum;
+}
+
+char* Jio_GetAcsData(char* pcACS_Data) {
+    if(NULL != pcACS_Data) {
+        char acMAC[16] = {0};
+        char acSerialNum[32] = {0};
+
+        Jio_GetMacAddress(acMAC);
+        Jio_GetSerialNumber(acSerialNum);
+
+        /* first 4byte of serial number + 12bytes of MAC address . Total length of the ACS data is 16 bytes*/
+        sprintf(pcACS_Data, "%.4s%.12s", acSerialNum, acMAC);
+    }
+    else{
+        ESP_LOGE(TAG, "<%s> <%s> <%d> <I>:: C<%p> Inv Arg...", gpcFileName, __FUNCTION__, __LINE__, __builtin_return_address(0));
+    }
+
+    return pcACS_Data;
+}
+#endif
+
+--------------------------------------------------------------
+Jio_Write_All_Manufacture_details jio_dev.c
+
+            /*Now we are writing ACS data in manufacturing partition during factory test by reading it from QR code.*/
+#if 0
+            ret |= nvs_set_str(M_handle, KEY_SERIAL_NUM, Jio_GetSerialNumber(acdata));
+            ret |= nvs_set_str(M_handle, KEY_ACS_DATA, Jio_GetAcsData(acdata));
+#endif /* NEVER */
 
 
 
