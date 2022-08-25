@@ -27,6 +27,10 @@ python ../../../alexa-idf/components/esptool_py/esptool/esptool.py --chip esp32 
 
 Code Snippets
 ***************************************************************************************************
+-------------------------------------------------
+app_main.c 
+//snprintf(__g_rsn, sizeof(__g_rsn), "%s%02X%02X", RSN_PREFIX, mac[4], mac[5]);
+
 ---------------------------------------------
     printf("\nT1\n [%d] [%s] ",__LINE__,__func__);
 
