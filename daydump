@@ -1,18 +1,37 @@
+useful commands
+****************************
+mem-dump
+task-dump
+sock-dump
+wifi-set "william" "12345678"
+wifi-set "TP-LINK_8D43" "12345678"
+wifi-set "Jio_Factory_Test" "12345678"
+wifi-set "TP-Link_sama" "sama@201"
 nvs-set jiova-log-level u16 7 
 nvs-get jiova-log-level u16
+nvs-set jiova-min-mem u16 1000
+192.168.2.110/facspk?test_init&fct=serialnum&sno=RJBSPGH00000005&acs_data=RJBSF008D160AEFC 
+
+
 
 xtensa-esp32-elf-addr2line -pfiaC ./build/jiova.elf 0x40110075
-
 
 
 python esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 921600 --before default_reset  write_flash --encrypt 0x20000 build/jiova.bin 
 
 python ../../../alexa-idf/components/esptool_py/esptool/esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 921600 --before default_reset  write_flash --encrypt 0x20000 build/jiova.bin 
 
+*******************************
 
+
+
+Code Snippets
+***************************************************************************************************
+---------------------------------------------
     printf("\nT1\n [%d] [%s] ",__LINE__,__func__);
 
-
+---------------------------------------------
+To write serial number and acs data
 
     #if 1
 
@@ -22,13 +41,62 @@ python ../../../alexa-idf/components/esptool_py/esptool/esptool.py --chip esp32 
     #endif
 
 
+-----------------------------------------------
+jio_dev.c Jio_get_log_buffer 
+
+#if 0
+        printf("\n<============START PRINT LOG L[%u] =============>\n", *len);
+#if 1
+        if(NULL != *buff) {
+            for(int i = 0; i < *len; ++i) {
+                printf("%c", ((*buff)[i]));
+                if((i%LOG_LINE_LENGTH) == 0) {
+                    usleep(10000);
+                }
+            }
+        }
+#else
+        printf("[%s]", *buff);
+#endif /* NEVER */
+        printf("\n<============STOP PRINT LOG =============>\n");
+#endif /* NEVER */
+----------------------------------------------------
+jio_peripheral Peripherals_Init
+
+/*If the speaker is in mute state, after reboot also we are maintaining the mute state.*/
+#if 0
+            va_nvs_set_str("mute","OFF");
+            va_dsp_mic_mute(0);
+#ifdef SS_LED_ENABLED
+            ss_set_led(SS_LED_MIC_ON);
+#else
+            va_led_set(VA_MUTE_DISABLE);
+#endif /* SS_LED_ENABLED */
+            ESP_LOGI(TAG,"Switching Off Mic Mute\n");
+#endif
+
+-------------------------------------------------------
+jio_dev.c Jio_Set_BT_State_After_OTA
+
+/*Faced the crash and wifi related issues during OTA failure case, so if OTA is failed
+ * we are rebooting the speaker and not switching ON the BT, BT will be switched ON in the next boot-up.
+ */
+#if 0
+        if(true != IsSuccess) {
+            /* If OTA is failed, switch ON the BT.*/
+            va_turn_on_bluetooth();
+        }
+#endif
+
+-------------------------------------------------------
 
 
 
-192.168.2.110/facspk?test_init&fct=serialnum&sno=RJBSPGH00000005&acs_data=RJBSF008D160AEFC 
 
 
-nvs-set jiova-min-mem u16 1000
+*********************************************************************************
+
+
 
 
 Read Syntaint dsp cpde
