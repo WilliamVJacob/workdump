@@ -21,12 +21,45 @@ python esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 921600 --before defaul
 
 python ../../../alexa-idf/components/esptool_py/esptool/esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 921600 --before default_reset  write_flash --encrypt 0x20000 build/jiova.bin 
 
+mosquitto_sub -h 'jpsit.jpdc.jiophone.net' -t 'dummytopic' -p 1884 -u 'dcuser' -P 'dc@1234!@#$' --cafile '/home/william/Documents/Jio_Extra_Files/CERT_PROD_jpdp.jpdc.jiophone.net.pem' --tls-version tlsv1.2 -d
+
+mosquitto_pub -h 'jpsit.jpdc.jiophone.net' -t 'dummytopic' -p 1884 -m "test by will" -u 'dcuser' -P 'dc@1234!@#$' --cafile '/home/william/Documents/Jio_Extra_Files/CERT_PROD_jpdp.jpdc.jiophone.net.pem' --tls-version tlsv1.2 -d
+
+
 *******************************
 
 
 
 Code Snippets
 ***************************************************************************************************
+
+--------------------------------------------------------------------------------------------
+ss_dota //mqtt
+esp_err_t ss_set_topic_name(char* topic) //for future use
+{
+    esp_err_t ret = ESP_FAIL;
+    dota_handle->topic_name = va_mem_strdup(topic,VA_MEM_EXTERNAL);
+    if (0 == strcmp(dota_handle->topic_name, topic))
+    {
+        ESP_LOGI(TAG, "[%s] [%d] :: MQTT Topic Name[%s]", __FUNCTION__, __LINE__, dota_handle->topic_name);
+        ret = ESP_OK;
+    }
+    else
+    {
+        ESP_LOGE(TAG, "[%s] [%d] :: va_mem_strdup failed ", __FUNCTION__, __LINE__);
+        ret = ESP_FAIL;
+    }
+    return ret;
+}
+
+char *ss_get_topic_name(char* topic) //for future use
+{
+    if ((NULL != topic) && (NULL != dota_handle->topic_name))
+    {
+        strcpy(topic, dota_handle->topic_name);
+    }
+    return topic;
+}
 -------------------------------------------------
 app_main.c 
 //snprintf(__g_rsn, sizeof(__g_rsn), "%s%02X%02X", RSN_PREFIX, mac[4], mac[5]);
