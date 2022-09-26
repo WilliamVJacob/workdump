@@ -25,6 +25,8 @@ mosquitto_sub -h 'jpsit.jpdc.jiophone.net' -t 'dummytopic' -p 1884 -u 'dcuser' -
 
 mosquitto_pub -h 'jpsit.jpdc.jiophone.net' -t 'dummytopic' -p 1884 -m "test by will" -u 'dcuser' -P 'dc@1234!@#$' --cafile '/home/william/Documents/Jio_Extra_Files/CERT_PROD_jpdp.jpdc.jiophone.net.pem' --tls-version tlsv1.2 -d
 
+mosquitto_sub  -t "ss_topic" -h "test.mosquitto.org" -p 8883  --cafile ~/Documents/Jio_Extra_Files/New_design/document/mosquiito.crt 
+mosquitto_pub  -t "ss_topic" -h "test.mosquitto.org" -p 8883  --cafile ~/Documents/Jio_Extra_Files/New_design/document/mosquiito.crt  -m "reeel"
 
 *******************************
 
