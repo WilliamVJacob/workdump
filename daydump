@@ -34,6 +34,60 @@ mosquitto_pub  -t "ss_topic" -h "test.mosquitto.org" -p 8883  --cafile ~/Documen
 
 Code Snippets
 ***************************************************************************************************
+-------------------------------------------------------------------------------------
+sytiant.c
+
+#ifdef NEVER
+static void send_wake_word_data(uint8_t *buf, uint32_t len)
+{
+    int offset = 0;
+
+    while((offset + WW_CHUNK_BUF_SIZE) <= len) {
+        gs_ss_va_dsp_record_cb(&buf[offset], WW_CHUNK_BUF_SIZE);
+        offset = offset + WW_CHUNK_BUF_SIZE;
+    }
+}
+#endif /* NEVER */
+
+#ifdef NEVER
+static void print_wake_word_data(uint8_t *buf, uint32_t len)
+{
+    int i = 0;
+
+    printf("\n\n unsigned char buff[] = { ");
+    while(i < len) {
+        printf("0x%02x ,", buf[i]);
+
+        if(0 == (i%32)) {
+            printf("\n");
+        }
+
+        if(0 == (i%320)) {
+            vTaskDelay(pdMS_TO_TICKS(10));
+        }
+        ++i;
+    }
+
+    printf("\n }; \n");
+}
+#endif /* NEVER */
+
+#ifdef NEVER
+void* syntiant_wake_word_task(void* argv) {
+    int class_index = -1;
+
+    while(true) {
+        if(xSemaphoreTake(ndp_isr_sem, portMAX_DELAY) == pdTRUE) {
+            gsIsWakeWordDetected = false;
+
+            void play_ww_detected_audio();
+            play_ww_detected_audio();
+            syntiant_platform_trigger_handler(&class_index);
+        }
+    }
+}
+#endif /* NEVER */
+
 
 --------------------------------------------------------------------------------------------
 ss_dota //mqtt
