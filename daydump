@@ -12,6 +12,9 @@ nvs-get jiova-log-level u16
 nvs-set jiova-min-mem u16 1000
 192.168.2.110/facspk?test_init&fct=serialnum&sno=RJBSPGH00000005&acs_data=RJBSF008D160AEFC 
 
+
+git remote add origin git@gitlab.com:nisa_william/study.git
+
 sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g" ~/dlna-logs.log  > ~/dlna-log1.log
 
 xtensa-esp32-elf-addr2line -pfiaC ./build/jiova.elf 0x40110075
