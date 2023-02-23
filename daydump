@@ -11,6 +11,7 @@ nvs-set jiova-log-level u16 7
 nvs-get jiova-log-level u16
 nvs-set jiova-min-mem u16 1000
 192.168.2.110/facspk?test_init&fct=serialnum&sno=RJBSPGH00000005&acs_data=RJBSF008D160AEFC 
+git log --raw
 
 
 git remote add origin git@gitlab.com:nisa_william/study.git
