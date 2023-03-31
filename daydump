@@ -1,4 +1,27 @@
-useful commands
+setup guide
+*********************************
+1. Create /system/init/wpa_supplicant.conf (refer Jio_Setup_Files)
+2. Setup WiFi in Jio camera board
+    wpa_supplicant -D nl80211 -i wlan0 -c /system/init/wpa_supplicant.conf -B && udhcpc -i wlan0 -q
+3. setup nfs server
+    add /mnt/nfs_share <Jio_Camera_IP>(rw,sync,no_subtree_check,sync)
+    sudo systemctl restart nfs-kernel-server
+4. Copy Jio_Setup_Files in /mnt/nfs_share
+5. mount nfs directory in Jio camera board
+    mount -t nfs -o nolock <System_IP>:/mnt/nfs_share /run
+    mount -t nfs -o nolock 192.168.29.81:/mnt/nfs_share /run
+    mount -t nfs -o nolock 192.168.0.116:/mnt/nfs_share /run
+
+6. cp jiofs to /system/jiofs
+    cp -rf /run/Jio_Setup_Files/jiofs/ /system/
+7.add directory to LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/run/Jio_Setup_Files/ffmpeg/build/lib/
+
+
+
+
+
+useful commands for esp
 ****************************
 mem-dump
 task-dump
