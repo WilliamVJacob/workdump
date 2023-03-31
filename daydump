@@ -16,6 +16,10 @@ setup guide
     cp -rf /run/Jio_Setup_Files/jiofs/ /system/
 7.add directory to LD_LIBRARY_PATH
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/run/Jio_Setup_Files/ffmpeg/build/lib/
+   
+8. To change rootfs to rw
+    mount -o remount,rw /
+
 
 
 
