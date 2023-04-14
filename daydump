@@ -11,11 +11,16 @@ setup guide
     mount -t nfs -o nolock <System_IP>:/mnt/nfs_share /run
     mount -t nfs -o nolock 192.168.29.81:/mnt/nfs_share /run
     mount -t nfs -o nolock 192.168.0.116:/mnt/nfs_share /run
+    mount -t nfs -o nolock 192.168.251.33:/mnt/nfs_share /run
 
 6. cp jiofs to /system/jiofs
     cp -rf /run/Jio_Setup_Files/jiofs/ /system/
 7.add directory to LD_LIBRARY_PATH
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/run/Jio_Setup_Files/ffmpeg/build/lib/
+    export  LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/run/sdk/lib/glibc
+    export  LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/system/lib
+
+
    
 8. To change rootfs to rw
     mount -o remount,rw /
