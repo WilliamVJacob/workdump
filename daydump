@@ -1,5 +1,7 @@
 #define BSP_TRACE() printf("[%s][%d]:: TRACE ", __FUNCTION__, __LINE__);
 
+
+
 nand erase 0x0 0x100000;
 setup guide
 *********************************
@@ -75,6 +77,136 @@ mosquitto_pub  -t "ss_topic" -h "test.mosquitto.org" -p 8883  --cafile ~/Documen
 
 Code Snippets
 ***************************************************************************************************
+camera_test.c
+----------------------------------------------------------------------------------------
+update 
+static void *get_video_stream(void *args)
+{
+    int val, i, chnNum, ret;
+    char stream_path[64];
+    IMPEncoderEncType encType;
+    int stream_fd = -1, totalSaveCnt = 0;
+
+    val = (int)args;
+    chnNum = val & 0xffff;
+    encType = (val >> 16) & 0xffff;
+
+    ret = IMP_Encoder_StartRecvPic(chnNum);
+    if (ret < 0)
+    {
+        BSP_LOG_ERR(TAG, "IMP_Encoder_StartRecvPic(%d) failed\n", chnNum);
+        return ((void *)-1);
+    }
+    sprintf(stream_path, "%s/stream-%d.%s", STREAM_FILE_PATH_PREFIX, chnNum,
+            (encType == IMP_ENC_TYPE_AVC) ? "h264" : ((encType == IMP_ENC_TYPE_HEVC) ? "h265" : "jpeg"));
+
+    if (encType == IMP_ENC_TYPE_JPEG)
+    {
+        totalSaveCnt = ((NR_FRAMES_TO_SAVE / 50) > 0) ? (NR_FRAMES_TO_SAVE / 50) : 1;
+    }
+    else
+    {
+        BSP_LOG_DBG(TAG, "Video ChnNum=%d Open Stream file %s ", chnNum, stream_path);
+        stream_fd = open(stream_path, O_RDWR | O_CREAT | O_TRUNC, 0777);
+        if (stream_fd < 0)
+        {
+            BSP_LOG_ERR(TAG, "failed: %s\n", strerror(errno));
+            return ((void *)-1);
+        }
+        BSP_LOG_DBG(TAG, "OK\n");
+        totalSaveCnt = NR_FRAMES_TO_SAVE;
+    }
+
+    for (i = 0; i < totalSaveCnt; i++)
+    {
+        ret = IMP_Encoder_PollingStream(chnNum, 1000);
+        if (ret < 0)
+        {
+            BSP_LOG_ERR(TAG, "IMP_Encoder_PollingStream(%d) timeout\n", chnNum);
+            continue;
+        }
+
+        IMPEncoderStream stream;
+        /* Get H264 or H265 Stream */
+        ret = IMP_Encoder_GetStream(chnNum, &stream, 1);
+
+        if (ret < 0)
+        {
+            BSP_LOG_ERR(TAG, "IMP_Encoder_GetStream(%d) failed\n", chnNum);
+            return ((void *)-1);
+        }
+
+        if (encType == IMP_ENC_TYPE_JPEG)
+        {
+            ret = BSP_Camera_SaveStreamName(stream_path, i, &stream);
+            if (ret < 0)
+            {
+                return ((void *)ret);
+            }
+        }
+#if 1
+        else
+        {
+            ret = BSP_Camera_SaveStream(stream_fd, &stream);
+            if (ret < 0)
+            {
+                close(stream_fd);
+                return ((void *)ret);
+            }
+        }
+#endif
+        IMP_Encoder_ReleaseStream(chnNum, &stream);
+    }
+
+    close(stream_fd);
+
+    ret = IMP_Encoder_StopRecvPic(chnNum);
+    if (ret < 0)
+    {
+        BSP_LOG_ERR(TAG, "IMP_Encoder_StopRecvPic(%d) failed\n", chnNum);
+        return ((void *)-1);
+    }
+
+    return ((void *)0);
+}
+int BSP_Camera_StreamVideo1()
+{
+    printf("trace [%d]\n", __LINE__);
+    int channel;
+    int ret;
+    pthread_t tid[FS_CHN_NUM];
+
+    for (channel = 0; channel < FS_CHN_NUM; ++channel)
+    {
+        if (camera_handler.channel_conf[channel].enable)
+        {
+            int arg = 0;
+            if (camera_handler.channel_conf[channel].payloadType == IMP_ENC_PROFILE_JPEG)
+            {
+                arg = (((camera_handler.channel_conf[channel].payloadType >> 24) << 16) | (4 + camera_handler.channel_conf[channel].index));
+            }
+            else
+            {
+                arg = (((camera_handler.channel_conf[channel].payloadType >> 24) << 16) | camera_handler.channel_conf[channel].index);
+            }
+            ret = pthread_create(&tid[channel], NULL, get_video_stream, (void *)arg);
+            if (ret < 0)
+            {
+                BSP_LOG_ERR(TAG, "Create ChnNum%d get_video_stream failed\n", (camera_handler.channel_conf[channel].payloadType == IMP_ENC_PROFILE_JPEG) ? (4 + camera_handler.channel_conf[channel].index) : camera_handler.channel_conf[channel].index);
+            }
+        }
+    }
+
+    for (channel = 0; channel < FS_CHN_NUM; ++channel)
+    {
+        if (camera_handler.channel_conf[channel].enable)
+        {
+            pthread_join(tid[channel], NULL);
+        }
+    }
+
+    return 0;
+}
 -------------------------------------------------------------------------------------
 sytiant.c
 
