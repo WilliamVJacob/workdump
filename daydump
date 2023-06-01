@@ -1,3 +1,4 @@
+make CROSS_COMPILE=mips-linux-gnu- HOSTCC=mips-linux-gnu-gcc HOSTSTRIP=echo env 
 #define BSP_TRACE() printf("[%s][%d]:: TRACE ", __FUNCTION__, __LINE__);
 
 
