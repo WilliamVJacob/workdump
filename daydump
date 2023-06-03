@@ -1,6 +1,7 @@
 make CROSS_COMPILE=mips-linux-gnu- HOSTCC=mips-linux-gnu-gcc HOSTSTRIP=echo env 
 #define BSP_TRACE() printf("[%s][%d]:: TRACE ", __FUNCTION__, __LINE__);
 
+/system/etc/wifi-start.sh "JioFiber_SAMA" "12345687"
 
 
 nand erase 0x0 0x100000;
