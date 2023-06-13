@@ -1,3 +1,76 @@
+bootcmd
+___________________________________
+setenv bootcmd 'echo;nand read 0x80600000 0x100000 0x300000;bootm 0x80600000'
+setenv bootargs console=ttyS1,115200n8 mem=100M@0x0 rmem=128M@0x6400000 nmem=28M@0xE400000 init=/linuxrc ubi.mtd=2 ubi.mtd=4 root=ubi0:rootfs rootfstype=ubifs r mtdparts=sfc_nand:1M(uboot),3M(kernel),20M(root),1M(key),-(appfs) lpj=11968512
+setenv bootargs console=ttyS1,115200n8 mem=100M@0x0 rmem=128M@0x6400000 nmem=28M@0xE400000 init=/linuxrc ubi.mtd=2 ubi.mtd=4 ubi.mtd=5 root=ubi0:rootfs rootfstype=ubifs r mtdparts=sfc_nand:1M(uboot),3M(kernel),20M(root),1M(key),40M(appfs),20M(testubi) lpj=11968512
+
+setenv bootargs console=ttyS1,115200n8 mem=100M@0x0 rmem=128M@0x6400000 nmem=28M@0xE400000 init=/linuxrc ubi.mtd=2 ubi.mtd=4 root=ubi0:rootfs rootfstype=ubifs r mtdparts=sfc_nand:0xE0000(uboot),0x20000(env),3M(kernel),20M(root),1M(key),-(appfs) lpj=11968512
+system = "mtd=4"
+rootfs = "mtd=2"
+*************************************************************************************************************************8
+
+new_jio
+system1 = mtd=7
+system0 = mtd=6
+rootfs1 = "mtd=5"
+rootfs0 = "mtd=4"
+0
+setenv bootargs console=ttyS1,115200n8 mem=100M@0x0 rmem=128M@0x6400000 nmem=28M@0xE400000 init=/linuxrc ubi.mtd=4 ubi.mtd=6 root=ubi0:rootfs0 rootfstype=ubifs r mtdparts=sfc_nand:1M(uboot),1M(otadata),3M(kernel0),3M(kernel1),12M(rootfs0),12M(rootfs1),40M(system0),40M(system1),1M(key) lpj=11968512
+setenv bootcmd 'nand read 0x80600000 0x200000 0x300000; bootm 0x80600000'
+saveenv
+1
+setenv bootargs console=ttyS1,115200n8 mem=100M@0x0 rmem=128M@0x6400000 nmem=28M@0xE400000 init=/linuxrc ubi.mtd=5 ubi.mtd=7 root=ubi0:rootfs1 rootfstype=ubifs r mtdparts=sfc_nand:1M(uboot),1M(otadata),3M(kernel0),3M(kernel1),12M(rootfs0),12M(rootfs1),40M(system0),40M(system1),1M(key) lpj=11968512
+setenv bootcmd 'nand read 0x80600000 0x500000 0x300000; bootm 0x80600000'
+saveenv
+
+
+
+setenv bootcmd nand read 0x80600000 0x200000 0x300000;bootm 0x80600000
+setenv bootcmd nand read 0x80600000 0x500000 0x300000;bootm 0x80600000
+savenv
+
+
+[root@Ingenic-g1_1:~]# cat /proc/mtd 
+dev:    size   erasesize  name
+mtd0: 00100000 00020000 "uboot"
+mtd1: 00100000 00020000 "otadata"
+mtd2: 00300000 00020000 "kernel0"
+mtd3: 00300000 00020000 "kernel1"
+mtd4: 00c00000 00020000 "rootfs0"
+mtd5: 00c00000 00020000 "rootfs1"
+mtd6: 02800000 00020000 "system0"
+mtd7: 02800000 00020000 "system1"
+mtd8: 00100000 00020000 "key"
+
+*************************************************************************************************************************8
+
+
+
+test
+setenv bootcmd nand read 0x80600000 0x100000 0x300000;bootm 0x80600000
+setenv bootcmd nand read 0x80600000 0x3800000 0x300000;bootm 0x80600000
+
+setenv bootargs console=ttyS1,115200n8 mem=100M@0x0 rmem=128M@0x6400000 nmem=28M@0xE400000 init=/linuxrc ubi.mtd=2 ubi.mtd=4 root=ubi0:rootfs0 rootfstype=ubifs r mtdparts=sfc_nand:1M(uboot),3M(kernel),12M(root),40M(appfs) lpj=11968512
+setenv bootargs console=ttyS1,115200n8 mem=100M@0x0 rmem=128M@0x6400000 nmem=28M@0xE400000 init=/linuxrc ubi.mtd=2 ubi.mtd=4 root=ubi0:rootfs1 rootfstype=ubifs r mtdparts=sfc_nand:1M(uboot),3M(kernel),12M(root),40M(appfs) lpj=11968512
+
+
+
+
+
+env_mfg
+0
+setenv bootcmd 'nand read 0x80600000 0x100000 0x300000; bootm 0x80600000'
+setenv bootargs console=ttyS1,115200n8 mem=100M@0x0 rmem=128M@0x6400000 nmem=28M@0xE400000 init=/linuxrc ubi.mtd=4 ubi.mtd=6 root=ubi0:rootfs0 rootfstype=ubifs r mtdparts=sfc_nand:0xE0000(uboot),0x20000(env),3M(kernel0),3M(kernel1),12M(rootfs0),12M(rootfs1),40M(system0),40M(system1),1M(mfg),1M(key) lpj=11968512
+
+
+
+1
+setenv bootcmd 'nand read 0x80600000 0x400000 0x300000; bootm 0x80600000'
+setenv bootargs console=ttyS1,115200n8 mem=100M@0x0 rmem=128M@0x6400000 nmem=28M@0xE400000 init=/linuxrc ubi.mtd=5 ubi.mtd=7 root=ubi0:rootfs1 rootfstype=ubifs r mtdparts=sfc_nand:0xE0000(uboot),0x20000(env),3M(kernel0),3M(kernel1),12M(rootfs0),12M(rootfs1),40M(system0),40M(system1),1M(mfg),1M(key) lpj=11968512
+
+___________________________________
+
+
 make CROSS_COMPILE=mips-linux-gnu- HOSTCC=mips-linux-gnu-gcc HOSTSTRIP=echo env 
 #define BSP_TRACE() printf("[%s][%d]:: TRACE ", __FUNCTION__, __LINE__);
 
