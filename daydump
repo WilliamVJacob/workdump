@@ -1,3 +1,7 @@
+worked on reading and storing kernel logs in device diagnostics
+spoke to elangovan regarding  kernels of ip camera and doorbell.
+checked with luxshare regarding the pending items for bullet ip camera.
+
 bootcmd
 ___________________________________
 setenv bootcmd 'echo;nand read 0x80600000 0x100000 0x300000;bootm 0x80600000'
