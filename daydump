@@ -1,6 +1,6 @@
-worked on reading and storing kernel logs in device diagnostics
-spoke to elangovan regarding  kernels of ip camera and doorbell.
-checked with luxshare regarding the pending items for bullet ip camera.
+grep for a particular name
+find /path/to/subdirectory -type f -name "Kconfig" -exec grep -n "test" {} +
+
 
 bootcmd
 ___________________________________
