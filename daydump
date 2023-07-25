@@ -1,6 +1,9 @@
 grep for a particular name
 find /path/to/subdirectory -type f -name "Kconfig" -exec grep -n "test" {} +
 
+sed -i 's/\r//' mk_system_ubi.sh 
+
+
 
 bootcmd
 ___________________________________
