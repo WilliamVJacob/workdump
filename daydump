@@ -127,6 +127,221 @@ sock-dump
 wifi-set "william" "12345678"
 wifi-set "TP-LINK_8D43" "12345678"
 wifi-set "Jio_Factory_Test" "12345678"
+
+
+
+
+
+old day_dump
+----------------------------Git for workdump
+git clone https://github.com/WilliamVJacob/workdump.git
+git add
+git commit
+git remote set-url origin https://williamvjacob:asking1234567890@github.com/WilliamVJacob/workdump.git
+git push origin main
+
+
+
+----------Gedit-------
+Multiline edit Ctrl+E
+
+Ctrl+ I	Move the cursor to a specific line number.
+Ctrl + G - Replace 
+Ctrl + M / Ctrl + shift + m -  Comment /Uncomment
+Ctrl + BkSpce	Delete the word behind the cursor.
+Ctrl + Del	Delete the word ahead of the cursor.
+Shift +Ctrl +BkSpce	Delete from the cursor to the beginning of the line.
+Shift+Ctrl+Del	Delete from the cursor to the end of the line.
+Ctrl+ D	Delete the current line.
+Alt +↑/↓ Move (drag) current line	
+
+--------------------Bt pairing 
+
+pair 00:00:AB:CD:5D:BA
+trust 00:00:AB:CD:5D:BA
+connect 00:00:AB:CD:5D:BA
+remove 00:00:AB:CD:5D:BA
+00:00:AB:CD:5D:BA
+
+pacmd set-card-profile bluez_card.00_00_AB_CD_5D_BA a2dp_sink
+pacmd set-default-sink bluez_sink.00_00_AB_CD_5D_BA.a2dp_sink
+
+wget http://youness.net/wp-content/uploads/2016/08/h2g2.ogg -P /tmp/
+paplay /tmp/h2g2.ogg
+
+
+
+
+--------------To install respeaker driver ac108  , follow the steps below
+sudo apt-get update
+
+sudo apt-get upgrade
+
+git clone https://github.com/respeaker/seeed-voicecard.git
+
+cd seeed-voicecard
+
+
+open install.sh and change the line 
+FORCE_KERNEL="1.20201022-1"
+kernels="5.4.72-v8+"
+
+open Makefile and add the line before ifdef DEBUG
+
+ ccflags-y += -fno-stack-protector
+
+sudo ./install.sh --compat-kernel
+
+reboot
+
+#prerequiste
+cd $HOME
+mkdir alexa    
+cd alexa
+mkdir build source third-party application-necessities  
+cd application-necessities
+mkdir sound-files
+ 
+sudo apt-get update && sudo apt-get upgrade -y
+cd $HOME
+sudo apt-get install -y \
+git gcc cmake openssl clang-format libgstreamer1.0-0 libgstreamer-plugins-base1.0-dev \
+gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad \
+gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools \
+pulseaudio doxygen libsqlite3-dev repo libasound2-dev
+
+# install curl
+sudo apt-get -y install build-essential nghttp2 libnghttp2-dev libssl-dev
+wget https://curl.haxx.se/download/curl-7.63.0.tar.gz
+tar xzf curl-7.63.0.tar.gz
+cd curl-7.63.0
+./configure --with-nghttp2 --prefix=/usr/local --with-ssl
+make && sudo make install
+sudo ldconfig
+
+#Install and configure PortAudio.
+cd ../third-party
+wget -c http://www.portaudio.com/archives/pa_stable_v190600_20161030.tgz
+tar xf pa_stable_v190600_20161030.tgz
+cd portaudio
+./configure --without-jack && make
+
+
+# alexa download & compile 
+cd $HOME/alexa/source
+cd $HOME/alexa/sourcegit clone https://github.com/alexa/avs-device-sdk.git 
+cd $HOME/alexa/build 
+cmake $HOME/alexa/source/avs-device-sdk \ -DGSTREAMER_MEDIA_PLAYER=ON \ -DPORTAUDIO=ON \ -DPORTAUDIO_LIB_PATH=$HOME/alexa/third-party/portaudio/lib/.libs/libportaudio.so \ -DPORTAUDIO_INCLUDE_DIR=$HOME/alexa/third-party/portaudio/include \ -DCMAKE_BUILD_TYPE=DEBUG 
+make SampleApp -j2 
+
+# building alexa
+mkdir $HOME/alexa/build/Integration/database
+
+
+
+cd $HOME/alexa/source/avs-device-sdk/tools/Install 
+cmake $HOME/alexa/source/avs-device-sdk \
+ -DGSTREAMER_MEDIA_PLAYER=ON \
+ -DPORTAUDIO=ON \
+ -DPORTAUDIO_LIB_PATH=$HOME/alexa/third-party/portaudio/lib/.libs/libportaudio.so \
+ -DPORTAUDIO_INCLUDE_DIR=$HOME/alexa/third-party/portaudio/include \
+ -DCMAKE_BUILD_TYPE=DEBUG
+ 
+  cmake $HOME/alexa/source/avs-device-sdk  -DGSTREAMER_MEDIA_PLAYER=ON  -DPORTAUDIO=ON  -DPORTAUDIO_LIB_PATH=$HOME/alexa/third-party/portaudio/lib/.libs/libportaudio.so -DPORTAUDIO_INCLUDE_DIR=$HOME/alexa/third-party/portaudio/include  -DCMAKE_BUILD_TYPE=DEBUG
+
+# create config file
+bash genConfig.sh config.json 12345 \
+   $HOME/alexa/build/Integration/database \
+   $HOME/alexa/source/avs-device-sdk \
+   $HOME/alexa/build/Integration/AlexaClientSDKConfig.json \
+   -DSDK_CONFIG_MANUFACTURER_NAME="alexa" \
+   -DSDK_CONFIG_DEVICE_DESCRIPTION="ubuntu"
+
+
+# run alexa
+./SampleApp/src/SampleApp ./Integration/AlexaClientSDKConfig.json
+
+
+# compile and run test
+make all test
+
+make all integration
+
+./Integration/test/SpeechSynthesizerIntegrationTest ./Integration/AlexaClientSDKConfig.json   ../source/avs-device-sdk/Integration/inputs 
+./Integration/test/JioPodSpeechTest ./Integration/AlexaClientSDKConfig.json   ../source/avs-device-sdk/Integration/inputs 
+
+
+
+
+
+
+Copy SPI image to spi flash 
+Berlin> u <file name in Uboot directoy> 0x10000000
+Berlin> spinit
+Berlin> erase f0000000 f00fffff
+Berlin> cp.b 0x10000000 0xf0000000 0xf00000;
+
+
+arecord -d 4 -f S16_LE -c 1 -r 16000 recognize_jio_test.wav
+
+
+
+
+How to enable VFP feature in cortex a53 64bit kernel for armv7 architecture
+
+Hi,
+
+I got the below"cpuinfo" information in my cortex a53 machine. Can you tell if  VFP feature is enabled in my machine ? If it is not enabled, how to enable VFP for 64bit kernel.
+
+$cat /proc/cpuinfo
+processor : 0
+BogoMIPS : 50.00
+Features : fp asimd aes pmull sha1 sha2 crc32 cpuid
+CPU implementer : 0x41
+CPU architecture: 8
+CPU variant : 0x0
+CPU part : 0xd03
+CPU revision : 4
+
+processor : 1
+BogoMIPS : 50.00
+Features : fp asimd aes pmull sha1 sha2 crc32 cpuid
+CPU implementer : 0x41
+CPU architecture: 8
+CPU variant : 0x0
+CPU part : 0xd03
+CPU revision : 4
+
+processor : 2
+BogoMIPS : 50.00
+Features : fp asimd aes pmull sha1 sha2 crc32 cpuid
+CPU implementer : 0x41
+CPU architecture: 8
+CPU variant : 0x0
+CPU part : 0xd03
+CPU revision : 4
+
+processor : 3
+BogoMIPS : 50.00
+Features : fp asimd aes pmull sha1 sha2 crc32 cpuid
+CPU implementer : 0x41
+CPU architecture: 8
+CPU variant : 0x0
+CPU part : 0xd03
+CPU revision : 4
+
+
+
+ubuntu arecord: main:722: audio open error: Device or resource busy
+lsof | grep snd
+ find the audio ipc which is blocking the device 
+
+/not  a solution
+fuser -fv /dev/snd/* /dev/dsp*
+
+
+
+
 wifi-set "TP-Link_sama" "sama@201"
 nvs-set jiova-log-level u16 7 
 nvs-get jiova-log-level u16
